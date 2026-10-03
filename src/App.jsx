@@ -16,26 +16,26 @@ function App() {
 
   const fetchWeather = async (cityName) => {
     if (!cityName.trim()) return;
-    
+
     setLoading(true);
     setError('');
-    
+
     try {
       const geoRes = await axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`);
-      
+
       if (!geoRes.data.results || geoRes.data.results.length === 0) {
         setError('City not found. Please try again.');
         setLoading(false);
         return;
       }
-      
+
       const location = geoRes.data.results[0];
       const { latitude, longitude, name, country } = location;
-      
+
       const weatherRes = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`);
-      
+
       const current = weatherRes.data.current;
-      
+
       setWeatherData({
         name,
         country,
@@ -44,7 +44,7 @@ function App() {
         windSpeed: current.wind_speed_10m,
         weatherCode: current.weather_code
       });
-      
+
     } catch (err) {
       setError('Failed to fetch weather data.');
       console.error(err);
@@ -84,59 +84,59 @@ function App() {
     <div className="min-h-screen w-full flex items-center justify-center p-5 text-white font-sans">
       <div className="bg-white/10 backdrop-blur-[16px] border border-white/20 rounded-[24px] py-10 px-[30px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-[5px] hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.6)] w-full max-w-[500px]">
         <div className="flex bg-white/15 rounded-xl px-4 py-3 mb-7 items-center border border-transparent transition-all duration-300 focus-within:border-accent focus-within:bg-white/20">
-        <MapPin size={20} className="text-white/70" />
-        <input 
-          type="text" 
-          placeholder="Search for a city..." 
-          className="bg-transparent border-none text-white text-base outline-none w-full ml-2.5 font-sans placeholder:text-white/70"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          onKeyDown={handleSearch}
-        />
-        <Search size={20} className="text-white/70 cursor-pointer" onClick={() => setSearchCity(city)} />
-      </div>
-
-      {loading && <div className="text-center text-white/70 py-5 text-base">Fetching weather...</div>}
-      
-      {error && <div className="text-center text-[#ff6b6b] py-5 text-base">{error}</div>}
-
-      {!loading && !error && weatherData && (
-        <div className="flex flex-col items-center text-center animate-fade-in">
-          <div className="mb-5">
-            {getWeatherIcon(weatherData.weatherCode)}
-          </div>
-          
-          <h1 className="text-[32px] font-semibold mb-1 tracking-tight">{weatherData.name}, {weatherData.country}</h1>
-          <p className="text-base text-white/70 capitalize mb-6">{getWeatherDescription(weatherData.weatherCode)}</p>
-          
-          <div className="text-[72px] font-bold leading-none mb-7 flex items-start bg-gradient-to-b from-white to-[#a8c0ff] bg-clip-text text-transparent">
-            {Math.round(weatherData.temperature)}<span className="text-4xl mt-2 ml-1">°C</span>
-          </div>
-
-          <div className="flex justify-between w-full pt-6 border-t border-white/20">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-white/10 rounded-full flex justify-center items-center">
-                <Droplets size={24} className="text-accent" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-xs text-white/70 mb-1">Humidity</span>
-                <span className="text-base font-semibold">{weatherData.humidity}%</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-white/10 rounded-full flex justify-center items-center">
-                <Wind size={24} className="text-accent" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-xs text-white/70 mb-1">Wind Speed</span>
-                <span className="text-base font-semibold">{weatherData.windSpeed} km/h</span>
-              </div>
-            </div>
-          </div>
+          <MapPin size={20} className="text-white/70" />
+          <input
+            type="text"
+            placeholder="Search for a city..."
+            className="bg-transparent border-none text-white text-base outline-none w-full ml-2.5 font-sans placeholder:text-white/70"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            onKeyDown={handleSearch}
+          />
+          <Search size={20} className="text-white/70 cursor-pointer" onClick={() => setSearchCity(city)} />
         </div>
-      )}
-    </div>
+
+        {loading && <div className="text-center text-white/70 py-5 text-base">Fetching weather...</div>}
+
+        {error && <div className="text-center text-[#ff6b6b] py-5 text-base">{error}</div>}
+
+        {!loading && !error && weatherData && (
+          <div className="flex flex-col items-center text-center animate-fade-in">
+            <div className="mb-5">
+              {getWeatherIcon(weatherData.weatherCode)}
+            </div>
+
+            <h1 className="text-[32px] font-semibold mb-1 tracking-tight">{weatherData.name}, {weatherData.country}</h1>
+            <p className="text-base text-white/70 capitalize mb-6">{getWeatherDescription(weatherData.weatherCode)}</p>
+
+            <div className="text-[72px] font-bold leading-none mb-7 flex items-start bg-gradient-to-b from-white to-[#a8c0ff] bg-clip-text text-transparent">
+              {(weatherData.temperature)}<span className="text-4xl mt-2 ml-1">°C</span>
+            </div>
+
+            <div className="flex justify-between w-full pt-6 border-t border-white/20">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-white/10 rounded-full flex justify-center items-center">
+                  <Droplets size={24} className="text-accent" />
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="text-xs text-white/70 mb-1">Humidity</span>
+                  <span className="text-base font-semibold">{weatherData.humidity}%</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-white/10 rounded-full flex justify-center items-center">
+                  <Wind size={24} className="text-accent" />
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="text-xs text-white/70 mb-1">Wind Speed</span>
+                  <span className="text-base font-semibold">{weatherData.windSpeed} km/h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

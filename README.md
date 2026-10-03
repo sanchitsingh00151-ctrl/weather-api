@@ -1,16 +1,40 @@
-# React + Vite
+# Modern Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A beautiful, sleek weather application built with React, Vite, and Tailwind CSS v4.
 
-Currently, two official plugins are available:
+## Features
+- **Real-time Weather Data**: Uses the free Open-Meteo API to fetch current weather conditions (temperature, humidity, wind speed, and weather code).
+- **Geocoding Support**: Automatically converts searched city names into precise geographic coordinates behind the scenes.
+- **Premium UI**: Features a modern glassmorphism design with a beautiful dark gradient background and smooth micro-animations.
+- **Dynamic Icons**: Uses `lucide-react` to automatically display the correct weather icon based on the forecast.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
+- React 19
+- Vite
+- Tailwind CSS v4
+- Axios
+- Lucide React
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sanchitsingh00151-ctrl/weather-api.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd weather-api
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## API Usage
+This project uses the [Open-Meteo API](https://open-meteo.com/), which requires no API key.
+- **Geocoding API**: Translates city names into Latitude/Longitude.
+- **Forecast API**: Fetches weather data using the coordinates.
